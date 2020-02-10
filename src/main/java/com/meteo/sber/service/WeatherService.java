@@ -1,13 +1,14 @@
 package com.meteo.sber.service;
 
 
-import com.meteo.sber.model.Weather;
+import com.meteo.sber.model.pojo.Weather;
 import com.meteo.sber.model.pojo.WeatherForecast;
 import com.meteo.sber.repo.WeatherRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -25,24 +26,24 @@ public class WeatherService {
     private static final String USER_AGENT = "Mozilla/5.0";
 
     @Value("${meteo.key}")
-    private static String apiKey;
+    private String apiKey;
 
     WeatherRepo weatherRepo;
 
     private static final String WEATHER_URL =
             "http://api.openweathermap.org/data/2.5/weather?q={city},{country}&APPID={key}";
 
-    private static final String FORECAST_URL =
+    private static final String WEEKLY_WEATHER_URL =
             "http://api.openweathermap.org/data/2.5/forecast?q={city},{country}&APPID={key}";
 
     private static final Logger logger = LoggerFactory.getLogger(WeatherService.class);
 
-    public WeatherService(@Autowired WeatherRepo weatherRepo, RestTemplate restTemplate) {
-        this.weatherRepo = weatherRepo;
-        this.restTemplate = restTemplate;
-    }
+    RestTemplate restTemplate;
 
-    private final RestTemplate restTemplate;
+    public WeatherService(@Autowired WeatherRepo weatherRepo, @Autowired RestTemplateBuilder restTemplateBuilder) {
+        this.weatherRepo = weatherRepo;
+        this.restTemplate = restTemplateBuilder.build();
+    }
 
     @Cacheable("weather")
     public Weather getWeather(String country, String city) {
@@ -54,7 +55,7 @@ public class WeatherService {
     @Cacheable("forecast")
     public WeatherForecast getWeatherForecast(String country, String city) {
         logger.info("Requesting weather forecast for {}/{}", country, city);
-        URI url = new UriTemplate(FORECAST_URL).expand(city, country, apiKey);
+        URI url = new UriTemplate(WEEKLY_WEATHER_URL).expand(city, country, apiKey);
         return invoke(url, WeatherForecast.class);
     }
 
