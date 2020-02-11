@@ -28,35 +28,5 @@ public class WeatherApiControllerTest {
 	@Autowired
 	private MockMvc mvc;
 
-	@Test
-	public void weather() throws Exception {
-		WeatherEntity weather = new WeatherEntity();
-		weather.setName("Moscow");
-		setWeatherEntry(weather, 286.72, 800, "01d", Instant.ofEpochSecond(1234));
-		given(this.weatherService.getWeather("Moscow")).willReturn(weather);
-		this.mvc.perform(get("/api/v1/weather/Moscow"))
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.name", is("Moscow")))
-				.andExpect(jsonPath("$.temperature", is(286.72)))
-				.andExpect(jsonPath("$.weatherId", is(800)))
-				.andExpect(jsonPath("$.timestamp", is("1970-01-01T00:20:34Z")));
-		verify(this.weatherService).getWeather("Moscow");
-	}
-
-
-
-	private static WeatherEntity createWeatherEntry(double temperature, int id, String icon,
-			Instant timestamp) {
-		WeatherEntity entry = new WeatherEntity();
-		setWeatherEntry(entry, temperature, id, icon, timestamp);
-		return entry;
-	}
-
-	private static void setWeatherEntry(WeatherEntity entry, double temperature, int id, String icon,
-			Instant timestamp) {
-		entry.setTemperature(temperature);
-		entry.setWeatherId(id);
-		entry.setTimestamp(timestamp.getEpochSecond());
-	}
 
 }
