@@ -58,6 +58,11 @@ public class WeatherService {
         return insertInData(weatherEntity);
     }
 
+    public WeatherEntity findOne(String name) {
+        Optional<WeatherEntity> weatherEntity = weatherRepo.findByName(name);
+            return weatherEntity.get();
+    }
+
     private WeatherEntity insertInData(WeatherEntity weatherEntity) {
         Optional<WeatherEntity> weather = weatherRepo.findByName(weatherEntity.getName());
         if (weather.isPresent()){

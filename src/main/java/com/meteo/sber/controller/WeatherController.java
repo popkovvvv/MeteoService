@@ -22,8 +22,13 @@ public class WeatherController {
         this.weatherConfigService = weatherConfigService;
     }
 
-    @GetMapping("/weather/get/{city}")
+    @GetMapping("/weather/{city}")
     public WeatherEntity getWeather(@PathVariable String city){
+        return weatherService.getWeather(city);
+    }
+
+    @DeleteMapping("/weather/{city}")
+    public WeatherEntity deleteWeather(@PathVariable String city){
         return weatherService.getWeather(city);
     }
 
