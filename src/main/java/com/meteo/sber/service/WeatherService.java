@@ -20,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriTemplate;
 import java.net.URI;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,4 +95,9 @@ public class WeatherService {
         logger.info("Update weather in city " + weatherEntity.getName());
     }
 
+    public List<WeatherEntity> getWeatherList() {
+        List<WeatherEntity> weatherEntities = new ArrayList<>();
+        weatherRepo.findAll().forEach(weatherEntities::add);
+        return weatherEntities;
+    }
 }

@@ -5,6 +5,8 @@ import com.meteo.sber.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1")
 public class WeatherController {
@@ -24,6 +26,11 @@ public class WeatherController {
     public void setUpdate(@RequestParam String city, @RequestParam String bool){
         boolean update = Boolean.parseBoolean(bool);
         weatherService.setUpdateCity(city,update);
+    }
+
+    @GetMapping("/weather/all")
+    public List<WeatherEntity> getWeatherList(){
+       return weatherService.getWeatherList();
     }
 
 }
