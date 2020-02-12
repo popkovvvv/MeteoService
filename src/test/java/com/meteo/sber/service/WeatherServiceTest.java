@@ -36,18 +36,7 @@ public class WeatherServiceTest {
 	@Autowired
 	private MockRestServiceServer server;
 
-	@Test
-	public void getWeather() {
-		this.server.expect(
-				requestTo(new UriTemplate(WEATHER_URL).expand("Moscow", apiKey)))
-				.andRespond(withSuccess(
-						new ClassPathResource("weather.json", getClass()),
-						MediaType.APPLICATION_JSON));
-		WeatherEntity forecast = this.weatherService.getWeather("Moscow");
-		assertThat(forecast.getName()).isEqualTo("Moscow");
-		assertThat(forecast.getTemperature()).isEqualTo(286.72, Offset.offset(0.1));
-		assertThat(forecast.getWeatherId()).isEqualTo(800);
-	}
+
 
 
 }

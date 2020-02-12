@@ -43,16 +43,18 @@ public class ConfigurationService {
         StringBuilder sb = new StringBuilder();
         sb.append("Configuration Parameters:");
         List<WeatherEntity> configs = (List<WeatherEntity>) weatherRepo.findAll();
-        for (WeatherEntity weatherEntity : configs) {
-            if (weatherEntity.getUpdate()){
-                if (!configurationList.containsKey(weatherEntity.getName())) {
-                    sb.append("\n")
-                            .append(weatherEntity.getSchedule())
-                            .append(":")
-                            .append(weatherEntity.getUpdate());
-                    this.configurationList.put(weatherEntity.getName(), weatherEntity);
+        if (configs != null){
+            for (WeatherEntity weatherEntity : configs) {
+                if (weatherEntity.getUpdate()){
+                    if (!configurationList.containsKey(weatherEntity.getName())) {
+                        sb.append("\n")
+                                .append(weatherEntity.getName())
+                                .append(":")
+                                .append(weatherEntity.getUpdate());
+                        this.configurationList.put(weatherEntity.getName(), weatherEntity);
+                    }
+                    weatherService.updateWeathers(weatherEntity);
                 }
-                weatherService.updateWeathers(weatherEntity);
             }
         }
         LOGGER.debug(sb.toString());
@@ -60,14 +62,10 @@ public class ConfigurationService {
         checkWeatherConfigurations();
     }
 
-    public WeatherEntity getConfiguration(String key) {
-        return configurationList.get(key);
-    }
-
     /**
-     * Checks if the mandatory parameters are exists in Database
+     * Checks if the weather parameters are exists in Database
      */
-    public void checkWeatherConfigurations() {
+    private void checkWeatherConfigurations() {
         for (String conf : weatherConf) {
             boolean exists = false;
             for (Map.Entry<String, WeatherEntity> pair : configurationList.entrySet()) {

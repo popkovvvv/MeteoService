@@ -32,16 +32,16 @@ public class WeatherService {
     @Value("${meteo.key}")
     private String apiKey;
 
-    WeatherRepo weatherRepo;
+    private WeatherRepo weatherRepo;
 
     private static final String WEATHER_URL =
             "http://api.openweathermap.org/data/2.5/weather?q={city}&appid={key}";
 
     private static final Logger logger = LoggerFactory.getLogger(WeatherService.class);
 
-    RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
-    ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
     public WeatherService(@Autowired WeatherRepo weatherRepo, @Autowired RestTemplateBuilder restTemplateBuilder,
                           @Autowired ModelMapper modelMapper) {
@@ -90,7 +90,7 @@ public class WeatherService {
        }
     }
 
-    void updateWeathers(WeatherEntity weatherEntity) {
+    public void updateWeathers(WeatherEntity weatherEntity) {
         this.getWeather(weatherEntity.getName());
         logger.info("Update weather in city " + weatherEntity.getName());
     }
