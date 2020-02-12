@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -41,8 +42,8 @@ public class WeatherService {
 
     private ModelMapper modelMapper;
 
-    public WeatherService(@Autowired WeatherRepo weatherRepo, @Autowired RestTemplateBuilder restTemplateBuilder,
-                          @Autowired ModelMapper modelMapper) {
+    @Autowired
+    public WeatherService(WeatherRepo weatherRepo,  RestTemplateBuilder restTemplateBuilder, ModelMapper modelMapper) {
         this.weatherRepo = weatherRepo;
         this.restTemplate = restTemplateBuilder.build();
         this.modelMapper = modelMapper;
@@ -74,16 +75,6 @@ public class WeatherService {
 
     public WeatherEntity convertToEntity(WeatherPojo weatherPojo){
         return modelMapper.map(weatherPojo, WeatherEntity.class);
-    }
-
-    public void setUpdateCity(String name, boolean bool){
-       Optional<WeatherEntity> weather =  weatherRepo.findByName(name);
-       if (weather.isPresent()){
-           WeatherEntity weatherEntity = weather.get();
-           weatherEntity.setUpdate(bool);
-           weatherRepo.save(weatherEntity);
-
-       }
     }
 
     public void updateWeathers(WeatherEntity weatherEntity) {

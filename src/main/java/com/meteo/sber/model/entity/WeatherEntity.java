@@ -47,7 +47,7 @@ public class WeatherEntity implements Serializable {
 	private Integer sunset;
 
 	@Column
-	private Date schedule;
+	private Date updatedAt;
 
 	@Column
 	private Boolean update;
@@ -63,21 +63,18 @@ public class WeatherEntity implements Serializable {
 		this.id = id;
 	}
 
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt( Date updatedAt ) {
+		this.updatedAt = updatedAt;
+	}
+
 	public Instant getTimestamp() {
 		return timestamp;
 	}
 
-	public Date getSchedule() {
-		return schedule;
-	}
-
-	public void setSchedule( Date schedule ) {
-		this.schedule = schedule;
-	}
-
-	public void setTimestamp( Instant timestamp) {
-		this.timestamp = timestamp;
-	}
 
 	public double getTemperature() {
 		return temperature;
@@ -157,5 +154,49 @@ public class WeatherEntity implements Serializable {
 
 	public void setUpdate(Boolean update) {
 		this.update = update;
+	}
+
+	@Override
+	public boolean equals( Object o ) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		WeatherEntity that = (WeatherEntity) o;
+
+		if (Double.compare(that.temperature, temperature) != 0) return false;
+		if (Double.compare(that.windSpeed, windSpeed) != 0) return false;
+		if (id != null ? !id.equals(that.id) : that.id != null) return false;
+		if (timestamp != null ? !timestamp.equals(that.timestamp) : that.timestamp != null) return false;
+		if (message != null ? !message.equals(that.message) : that.message != null) return false;
+		if (shortMessage != null ? !shortMessage.equals(that.shortMessage) : that.shortMessage != null) return false;
+		if (weatherId != null ? !weatherId.equals(that.weatherId) : that.weatherId != null) return false;
+		if (country != null ? !country.equals(that.country) : that.country != null) return false;
+		if (sunrise != null ? !sunrise.equals(that.sunrise) : that.sunrise != null) return false;
+		if (sunset != null ? !sunset.equals(that.sunset) : that.sunset != null) return false;
+		if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
+		if (update != null ? !update.equals(that.update) : that.update != null) return false;
+		return name != null ? name.equals(that.name) : that.name == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result;
+		long temp;
+		result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
+		temp = Double.doubleToLongBits(temperature);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(windSpeed);
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		result = 31 * result + (message != null ? message.hashCode() : 0);
+		result = 31 * result + (shortMessage != null ? shortMessage.hashCode() : 0);
+		result = 31 * result + (weatherId != null ? weatherId.hashCode() : 0);
+		result = 31 * result + (country != null ? country.hashCode() : 0);
+		result = 31 * result + (sunrise != null ? sunrise.hashCode() : 0);
+		result = 31 * result + (sunset != null ? sunset.hashCode() : 0);
+		result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
+		result = 31 * result + (update != null ? update.hashCode() : 0);
+		result = 31 * result + (name != null ? name.hashCode() : 0);
+		return result;
 	}
 }

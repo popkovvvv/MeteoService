@@ -3,43 +3,37 @@ package com.meteo.sber.service;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import com.meteo.sber.config.AppConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.stereotype.Service;
 
 @Service
 public class WeatherScheduler implements SchedulingConfigurer {
 
-    private ConfigurationService configurationService;
+    private WeatherConfigService weatherConfigService;
+
+    private AppConfig appConfig;
 
     @Autowired
-    public WeatherScheduler(ConfigurationService configurationService) {
-        this.configurationService = configurationService;
+    public WeatherScheduler( WeatherConfigService weatherConfigService, AppConfig appConfig) {
+        this.weatherConfigService = weatherConfigService;
+        this.appConfig = appConfig;
     }
 
-    @Bean
-    public TaskScheduler poolScheduler() {
-        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-        scheduler.setThreadNamePrefix("ThreadPoolTaskScheduler");
-        scheduler.setPoolSize(1);
-        scheduler.initialize();
-        return scheduler;
-    }
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-        taskRegistrar.setScheduler(poolScheduler());
+        taskRegistrar.setScheduler(appConfig.poolScheduler());
         taskRegistrar.addTriggerTask(() -> {
-            configurationService.loadConfigurations();
+            weatherConfigService.updateWeather();
         }, triggerContext -> {
             Calendar nextExecutionTime = new GregorianCalendar();
             Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();
             nextExecutionTime.setTime(lastActualExecutionTime != null ? lastActualExecutionTime : new Date());
-            nextExecutionTime.add(Calendar.MINUTE, 1);
+            nextExecutionTime.add(Calendar.SECOND, 15);
             return nextExecutionTime.getTime();
         });
     }

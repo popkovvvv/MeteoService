@@ -1,6 +1,7 @@
 package com.meteo.sber.controller;
 
 import com.meteo.sber.model.entity.WeatherEntity;
+import com.meteo.sber.service.WeatherConfigService;
 import com.meteo.sber.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +14,12 @@ public class WeatherController {
 
     WeatherService weatherService;
 
-    public WeatherController(@Autowired WeatherService weatherService) {
+    WeatherConfigService weatherConfigService;
+
+    @Autowired
+    public WeatherController( WeatherService weatherService, WeatherConfigService weatherConfigService ) {
         this.weatherService = weatherService;
+        this.weatherConfigService = weatherConfigService;
     }
 
     @GetMapping("/weather/get/{city}")
@@ -25,7 +30,7 @@ public class WeatherController {
     @PostMapping("/weather/update")
     public void setUpdate(@RequestParam String city, @RequestParam String bool){
         boolean update = Boolean.parseBoolean(bool);
-        weatherService.setUpdateCity(city,update);
+        weatherConfigService.updateWeather(city,update);
     }
 
     @GetMapping("/weather/all")
