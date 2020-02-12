@@ -59,7 +59,7 @@ public class WeatherService {
         return insertInData(weatherEntity);
     }
 
-    public WeatherEntity insertInData(WeatherEntity weatherEntity) {
+    private WeatherEntity insertInData(WeatherEntity weatherEntity) {
         Optional<WeatherEntity> weather = weatherRepo.findByName(weatherEntity.getName());
         if (weather.isPresent()){
             return weather.get();
@@ -69,10 +69,8 @@ public class WeatherService {
     }
 
     private <T> T invoke(URI url, Class<T> responseType) {
-        RequestEntity<?> request = RequestEntity.get(url)
-                .accept(MediaType.APPLICATION_JSON).build();
-        ResponseEntity<T> exchange = this.restTemplate
-                .exchange(request, responseType);
+        RequestEntity<?> request = RequestEntity.get(url).accept(MediaType.APPLICATION_JSON).build();
+        ResponseEntity<T> exchange = this.restTemplate.exchange(request, responseType);
         return exchange.getBody();
     }
 
@@ -90,7 +88,7 @@ public class WeatherService {
        }
     }
 
-    public void updateWeathers(WeatherEntity weatherEntity) {
+    void updateWeathers(WeatherEntity weatherEntity) {
         this.getWeather(weatherEntity.getName());
         logger.info("Update weather in city " + weatherEntity.getName());
     }
