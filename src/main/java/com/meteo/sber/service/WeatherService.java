@@ -79,12 +79,19 @@ public class WeatherService {
         return modelMapper.map(weatherPojo, WeatherEntity.class);
     }
 
-    @Scheduled(fixedRateString = "${scheduler.configurationLoadRate}")
-    public void updateWeathers() {
-        Iterable<WeatherEntity> weatherEntities = weatherRepo.findAll();
-        weatherEntities.forEach(weatherEntity -> getWeather(weatherEntity.getName()));
-        logger.info("Update weather in city");
+    public void setUpdateCity(String name, boolean bool){
+       Optional<WeatherEntity> weather =  weatherRepo.findByName(name);
+       if (weather.isPresent()){
+           WeatherEntity weatherEntity = weather.get();
+           weatherEntity.setUpdate(bool);
+           weatherRepo.save(weatherEntity);
 
+       }
+    }
+
+    void updateWeathers(WeatherEntity weatherEntity) {
+        this.getWeather(weatherEntity.getName());
+        logger.info("Update weather in city " + weatherEntity.getName());
     }
 
 }

@@ -49,6 +49,9 @@ public class WeatherEntity implements Serializable {
 	@Column
 	private Date schedule;
 
+	@Column
+	private Boolean update;
+
 	@Column(name = "cityName")
 	private String name;
 
@@ -146,5 +149,13 @@ public class WeatherEntity implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Boolean getUpdate() {
+		return update;
+	}
+
+	public void setUpdate(Boolean update) {
+		this.update = update;
 	}
 }
