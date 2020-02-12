@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class ConfigurationService {
         StringBuilder sb = new StringBuilder();
         sb.append("Configuration Parameters:");
         List<WeatherEntity> configs = (List<WeatherEntity>) weatherRepo.findAll();
-        if (!configs.isEmpty()){
+        if (CollectionUtils.isEmpty(configs)){
             for (WeatherEntity weatherEntity : configs) {
                 if (weatherEntity.getUpdate()){
                     if (!configurationList.containsKey(weatherEntity.getName())) {

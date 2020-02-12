@@ -27,8 +27,6 @@ import java.util.Optional;
 @Service
 public class WeatherService {
 
-    private static final String USER_AGENT = "Mozilla/5.0";
-
     @Value("${meteo.key}")
     private String apiKey;
 
