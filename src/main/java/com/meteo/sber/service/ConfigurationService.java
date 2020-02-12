@@ -43,7 +43,7 @@ public class ConfigurationService {
         StringBuilder sb = new StringBuilder();
         sb.append("Configuration Parameters:");
         List<WeatherEntity> configs = (List<WeatherEntity>) weatherRepo.findAll();
-        if (configs != null){
+        if (!configs.isEmpty()){
             for (WeatherEntity weatherEntity : configs) {
                 if (weatherEntity.getUpdate()){
                     if (!configurationList.containsKey(weatherEntity.getName())) {
