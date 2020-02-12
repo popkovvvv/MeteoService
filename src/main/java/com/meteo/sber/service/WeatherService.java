@@ -74,7 +74,7 @@ public class WeatherService {
         return exchange.getBody();
     }
 
-    private WeatherEntity convertToEntity(WeatherPojo weatherPojo){
+    public WeatherEntity convertToEntity(WeatherPojo weatherPojo){
         return modelMapper.map(weatherPojo, WeatherEntity.class);
     }
 
@@ -88,7 +88,7 @@ public class WeatherService {
        }
     }
 
-    void updateWeathers(WeatherEntity weatherEntity) {
+    public void updateWeathers(WeatherEntity weatherEntity) {
         this.getWeather(weatherEntity.getName());
         logger.info("Update weather in city " + weatherEntity.getName());
     }
