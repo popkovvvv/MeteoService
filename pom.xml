@@ -44,49 +44,20 @@
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.graphql-java-kickstart</groupId>
+			<groupId>com.graphql-java</groupId>
 			<artifactId>graphql-spring-boot-starter</artifactId>
-			<version>6.0.0</version>
+			<version>5.0.2</version>
 		</dependency>
-
-		<!-- to embed Altair tool -->
 		<dependency>
-			<groupId>com.graphql-java-kickstart</groupId>
-			<artifactId>altair-spring-boot-starter</artifactId>
-			<version>6.0.0</version>
-			<scope>runtime</scope>
+			<groupId>com.graphql-java</groupId>
+			<artifactId>graphql-java-tools</artifactId>
+			<version>5.2.4</version>
 		</dependency>
-
-		<!-- to embed GraphiQL tool -->
 		<dependency>
-			<groupId>com.graphql-java-kickstart</groupId>
+			<groupId>com.graphql-java</groupId>
 			<artifactId>graphiql-spring-boot-starter</artifactId>
-			<version>6.0.0</version>
-			<scope>runtime</scope>
+			<version>5.0.2</version>
 		</dependency>
-
-		<!-- to embed Voyager tool -->
-		<dependency>
-			<groupId>com.graphql-java-kickstart</groupId>
-			<artifactId>voyager-spring-boot-starter</artifactId>
-			<version>6.0.0</version>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!-- testing facilities -->
-		<dependency>
-			<groupId>com.graphql-java-kickstart</groupId>
-			<artifactId>graphql-spring-boot-starter-test</artifactId>
-			<version>6.0.0</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/io.leangen.graphql/spqr -->
-		<dependency>
-			<groupId>io.leangen.graphql</groupId>
-			<artifactId>spqr</artifactId>
-			<version>0.10.1</version>
-		</dependency>
-
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>

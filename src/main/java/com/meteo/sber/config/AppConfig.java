@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
+import javax.annotation.PostConstruct;
+import java.util.TimeZone;
+
 @Configuration
 public class AppConfig {
 
@@ -21,5 +24,10 @@ public class AppConfig {
         scheduler.setPoolSize(1);
         scheduler.initialize();
         return scheduler;
+    }
+
+    @PostConstruct
+    public void started() {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
 }

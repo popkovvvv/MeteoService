@@ -40,7 +40,7 @@ public class WeatherConfigService {
         }
     }
 
-    public void updateWeather() {
+    public void update() {
         LOGGER.debug("Scheduled Event: Configuration table loaded/updated from database");
         for (WeatherEntity weatherEntity : weatherEntityMap.values()) {
             if (weatherEntity.getUpdate()){

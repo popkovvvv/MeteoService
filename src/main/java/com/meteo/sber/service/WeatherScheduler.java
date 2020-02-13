@@ -38,7 +38,7 @@ public class WeatherScheduler implements SchedulingConfigurer {
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         taskRegistrar.setScheduler(appConfig.poolScheduler());
         taskRegistrar.addTriggerTask(() -> {
-            weatherConfigService.updateWeather();
+            weatherConfigService.update();
         }, triggerContext -> {
             Calendar nextExecutionTime = new GregorianCalendar();
             Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();

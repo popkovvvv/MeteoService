@@ -1,0 +1,18 @@
+type Weather {
+    id: ID!,
+    temperature: Float,
+    windSpeed: String,
+    message: String
+    shortMessage: String
+    weatherId: Int
+    country: String
+    sunrise: Int
+    sunset: Int
+    update: Boolean
+    name: String
+
+}
+type Query {
+    weather(name: String): Weather
+    weatherList: [Weather]
+}
