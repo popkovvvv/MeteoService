@@ -1,6 +1,6 @@
 package com.meteo.sber.config;
 
-import com.meteo.sber.controller.WeatherQuery;
+//import com.meteo.sber.controller.WeatherQuery;
 import com.meteo.sber.service.WeatherConfigService;
 import com.meteo.sber.service.WeatherService;
 import org.modelmapper.ModelMapper;
