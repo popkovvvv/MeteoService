@@ -2,8 +2,8 @@ package com.meteo.sber.controller;
 
 import com.meteo.sber.model.entity.WeatherEntity;
 import com.meteo.sber.model.request.MessageRequest;
-import com.meteo.sber.service.WeatherConfigService;
-import com.meteo.sber.service.WeatherScheduler;
+import com.meteo.sber.service.schedule.WeatherScheduleService;
+import com.meteo.sber.service.schedule.WeatherScheduler;
 import com.meteo.sber.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,18 +15,18 @@ import java.util.stream.Collectors;
 @RequestMapping("api/v1")
 public class WeatherController {
 
-    WeatherService weatherService;
+    private final WeatherService weatherService;
 
-    WeatherConfigService weatherConfigService;
+    private final WeatherScheduleService weatherScheduleService;
 
-    WeatherScheduler weatherScheduler;
+    private final WeatherScheduler weatherScheduler;
 
     @Autowired
-    public WeatherController( WeatherService weatherService,
-                              WeatherConfigService weatherConfigService,
-                              WeatherScheduler weatherScheduler) {
+    public WeatherController(WeatherService weatherService,
+                             WeatherScheduleService weatherScheduleService,
+                             WeatherScheduler weatherScheduler) {
         this.weatherService = weatherService;
-        this.weatherConfigService = weatherConfigService;
+        this.weatherScheduleService = weatherScheduleService;
         this.weatherScheduler = weatherScheduler;
     }
 
@@ -41,15 +41,13 @@ public class WeatherController {
     }
 
     @PostMapping("/weather/update")
-    public void setUpdate(@RequestParam String city, @RequestParam String bool){
-        boolean update = Boolean.parseBoolean(bool);
-        weatherConfigService.updateWeather(city,update);
+    public void setUpdate(@RequestParam String city, @RequestParam Boolean bool){
+        weatherScheduleService.updateWeather(city, bool);
     }
 
     @PostMapping("/weather/time")
-    public MessageRequest setTimeUp(@RequestParam String seconds){
-        Integer update = Integer.parseInt(seconds);
-        return weatherScheduler.changeTimeUp(update);
+    public MessageRequest setTimeUp(@RequestParam Integer seconds){
+        return weatherScheduler.changeTimeUp(seconds);
     }
 
     @GetMapping("/weathers/{count}")

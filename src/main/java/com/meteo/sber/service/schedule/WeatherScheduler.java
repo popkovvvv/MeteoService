@@ -1,4 +1,4 @@
-package com.meteo.sber.service;
+package com.meteo.sber.service.schedule;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class WeatherScheduler implements SchedulingConfigurer {
 
-    private WeatherConfigService weatherConfigService;
+    private WeatherScheduleService weatherScheduleService;
 
     private AppConfig appConfig;
 
@@ -27,8 +27,8 @@ public class WeatherScheduler implements SchedulingConfigurer {
 
 
     @Autowired
-    public WeatherScheduler( WeatherConfigService weatherConfigService, AppConfig appConfig) {
-        this.weatherConfigService = weatherConfigService;
+    public WeatherScheduler(WeatherScheduleService weatherScheduleService, AppConfig appConfig) {
+        this.weatherScheduleService = weatherScheduleService;
         this.appConfig = appConfig;
         this.timeToUp = 20;
     }
@@ -38,7 +38,7 @@ public class WeatherScheduler implements SchedulingConfigurer {
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         taskRegistrar.setScheduler(appConfig.poolScheduler());
         taskRegistrar.addTriggerTask(() -> {
-            weatherConfigService.update();
+            weatherScheduleService.update();
         }, triggerContext -> {
             Calendar nextExecutionTime = new GregorianCalendar();
             Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();

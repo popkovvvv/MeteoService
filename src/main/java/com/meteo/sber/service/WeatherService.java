@@ -64,14 +64,6 @@ public class WeatherService {
         return insertInData(weather);
     }
 
-    public Object findOne(String name) {
-        Optional<WeatherEntity> weatherEntity = weatherRepo.findByName(name);
-        if (weatherEntity.isPresent()){
-            return weatherEntity.get();
-        }
-        return new MessageRequest("BAD_REQUEST", HttpStatus.BAD_REQUEST.value());
-    }
-
     public MessageRequest deleteWeather( String name) {
         Optional<WeatherEntity> weatherEntity = weatherRepo.findByName(name);
         if (weatherEntity.isPresent()) {

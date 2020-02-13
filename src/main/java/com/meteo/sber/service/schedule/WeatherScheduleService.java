@@ -1,22 +1,23 @@
-package com.meteo.sber.service;
+package com.meteo.sber.service.schedule;
 
 import com.meteo.sber.model.entity.WeatherEntity;
 import com.meteo.sber.repo.WeatherRepo;
+import com.meteo.sber.service.WeatherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.List;
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class WeatherConfigService {
+public class WeatherScheduleService {
 
-    private static final Logger LOGGER  = LoggerFactory.getLogger(WeatherConfigService.class);
+    private static final Logger LOGGER  = LoggerFactory.getLogger(WeatherScheduleService.class);
 
     WeatherRepo weatherRepo;
 
@@ -25,7 +26,7 @@ public class WeatherConfigService {
     private Map<String, WeatherEntity> weatherEntityMap;
 
     @Autowired
-    public WeatherConfigService( WeatherRepo weatherRepo, WeatherService weatherService) {
+    public WeatherScheduleService(WeatherRepo weatherRepo, WeatherService weatherService) {
         this.weatherRepo = weatherRepo;
         this.weatherEntityMap = new ConcurrentHashMap<>();
         this.weatherService = weatherService;
@@ -46,6 +47,8 @@ public class WeatherConfigService {
         for (WeatherEntity weatherEntity : weatherEntityMap.values()) {
             if (weatherEntity.isUpdate()){
                 weatherService.updateWeathers(weatherEntity);
+                weatherEntity.setUpdatedAt(new Date());
+                weatherRepo.save(weatherEntity);
             }
         }
     }
