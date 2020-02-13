@@ -3,6 +3,7 @@ package com.meteo.sber.service;
 
 import com.meteo.sber.model.entity.WeatherEntity;
 import com.meteo.sber.model.pojo.WeatherPojo;
+import com.meteo.sber.model.request.MessageRequest;
 import com.meteo.sber.repo.WeatherRepo;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -51,16 +53,33 @@ public class WeatherService {
 
     @Cacheable("weather")
     public WeatherEntity getWeather(String city) {
+        Optional<WeatherEntity> weatherEntity = weatherRepo.findByName(city);
+        if (weatherEntity.isPresent()) {
+            return weatherEntity.get();
+        }
         logger.info("Requesting current weather for {}", city);
         URI url = new UriTemplate(WEATHER_URL).expand(city, apiKey);
         WeatherPojo weatherRequest = invoke(url, WeatherPojo.class);
-        WeatherEntity weatherEntity = convertToEntity(weatherRequest);
-        return insertInData(weatherEntity);
+        WeatherEntity weather = convertToEntity(weatherRequest);
+        return insertInData(weather);
     }
 
-    public WeatherEntity findOne(String name) {
+    public Object findOne(String name) {
         Optional<WeatherEntity> weatherEntity = weatherRepo.findByName(name);
+        if (weatherEntity.isPresent()){
             return weatherEntity.get();
+        }
+        return new MessageRequest("BAD_REQUEST", HttpStatus.BAD_REQUEST.value());
+    }
+
+    public MessageRequest deleteWeather( String name) {
+        Optional<WeatherEntity> weatherEntity = weatherRepo.findByName(name);
+        if (weatherEntity.isPresent()) {
+            weatherRepo.delete(weatherEntity.get());
+            return new MessageRequest("OK", HttpStatus.OK.value());
+        }
+        return new MessageRequest("BAD_REQUEST", HttpStatus.BAD_REQUEST.value());
+
     }
 
     private WeatherEntity insertInData(WeatherEntity weatherEntity) {

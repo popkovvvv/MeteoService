@@ -27,7 +27,7 @@ public class GraphQlConfig {
 
     @GraphQLQuery(name = "weather")
     public WeatherEntity weather(@GraphQLArgument(name = "name") String name) {
-        return weatherService.findOne(name);
+        return (WeatherEntity) weatherService.findOne(name);
     }
 
 
