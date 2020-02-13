@@ -14,5 +14,12 @@ type Weather {
 }
 type Query {
     weather(name: String): Weather
-    weatherList: [Weather]
+    weatherList(count: Int): [Weather]
+    weatherUpdate(city: String, bool: Boolean): MessageRequest
+    weatherDelete(city: String): MessageRequest
+}
+
+type MessageRequest {
+    message: String
+    status: Int
 }

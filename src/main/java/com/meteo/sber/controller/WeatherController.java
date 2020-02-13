@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1")
@@ -51,9 +52,9 @@ public class WeatherController {
         return weatherScheduler.changeTimeUp(update);
     }
 
-    @GetMapping("/weather/all")
-    public List<WeatherEntity> getWeatherList(){
-       return weatherService.getWeatherList();
+    @GetMapping("/weathers/{count}")
+    public List<WeatherEntity> getWeatherList(@PathVariable int count){
+       return weatherService.getWeatherList().stream().limit(count).collect(Collectors.toList());
     }
 
 }
