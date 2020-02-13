@@ -35,22 +35,22 @@ public class WeatherEntity implements Serializable {
 	private String shortMessage;
 
 	@Column
-	private Integer weatherId;
+	private int weatherId;
 
 	@Column
 	private String country;
 
 	@Column
-	private Integer sunrise;
+	private int sunrise;
 
 	@Column
-	private Integer sunset;
+	private int sunset;
 
 	@Column
 	private Date updatedAt;
 
 	@Column
-	private Boolean update;
+	private boolean update;
 
 	@Column(name = "cityName")
 	private String name;
@@ -59,8 +59,80 @@ public class WeatherEntity implements Serializable {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId( Long id ) {
 		this.id = id;
+	}
+
+	public Instant getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp( Instant timestamp ) {
+		this.timestamp = timestamp;
+	}
+
+	public double getTemperature() {
+		return temperature;
+	}
+
+	public void setTemperature( double temperature ) {
+		this.temperature = temperature;
+	}
+
+	public double getWindSpeed() {
+		return windSpeed;
+	}
+
+	public void setWindSpeed( double windSpeed ) {
+		this.windSpeed = windSpeed;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage( String message ) {
+		this.message = message;
+	}
+
+	public String getShortMessage() {
+		return shortMessage;
+	}
+
+	public void setShortMessage( String shortMessage ) {
+		this.shortMessage = shortMessage;
+	}
+
+	public int getWeatherId() {
+		return weatherId;
+	}
+
+	public void setWeatherId( int weatherId ) {
+		this.weatherId = weatherId;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry( String country ) {
+		this.country = country;
+	}
+
+	public int getSunrise() {
+		return sunrise;
+	}
+
+	public void setSunrise( int sunrise ) {
+		this.sunrise = sunrise;
+	}
+
+	public int getSunset() {
+		return sunset;
+	}
+
+	public void setSunset( int sunset ) {
+		this.sunset = sunset;
 	}
 
 	public Date getUpdatedAt() {
@@ -71,89 +143,20 @@ public class WeatherEntity implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public Instant getTimestamp() {
-		return timestamp;
+	public boolean isUpdate() {
+		return update;
 	}
 
-
-	public double getTemperature() {
-		return temperature;
-	}
-
-	public void setTemperature(double temperature) {
-		this.temperature = temperature;
-	}
-
-	public double getWindSpeed() {
-		return windSpeed;
-	}
-
-	public void setWindSpeed(double windSpeed) {
-		this.windSpeed = windSpeed;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public String getShortMessage() {
-		return shortMessage;
-	}
-
-	public void setShortMessage(String shortMessage) {
-		this.shortMessage = shortMessage;
-	}
-
-	public Integer getWeatherId() {
-		return weatherId;
-	}
-
-	public void setWeatherId(Integer weatherId) {
-		this.weatherId = weatherId;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public Integer getSunrise() {
-		return sunrise;
-	}
-
-	public void setSunrise(Integer sunrise) {
-		this.sunrise = sunrise;
-	}
-
-	public Integer getSunset() {
-		return sunset;
-	}
-
-	public void setSunset(Integer sunset) {
-		this.sunset = sunset;
+	public void setUpdate( boolean update ) {
+		this.update = update;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName( String name ) {
 		this.name = name;
-	}
-
-	public Boolean getUpdate() {
-		return update;
-	}
-
-	public void setUpdate(Boolean update) {
-		this.update = update;
 	}
 
 	@Override
@@ -165,16 +168,16 @@ public class WeatherEntity implements Serializable {
 
 		if (Double.compare(that.temperature, temperature) != 0) return false;
 		if (Double.compare(that.windSpeed, windSpeed) != 0) return false;
+		if (weatherId != that.weatherId) return false;
+		if (sunrise != that.sunrise) return false;
+		if (sunset != that.sunset) return false;
+		if (update != that.update) return false;
 		if (id != null ? !id.equals(that.id) : that.id != null) return false;
 		if (timestamp != null ? !timestamp.equals(that.timestamp) : that.timestamp != null) return false;
 		if (message != null ? !message.equals(that.message) : that.message != null) return false;
 		if (shortMessage != null ? !shortMessage.equals(that.shortMessage) : that.shortMessage != null) return false;
-		if (weatherId != null ? !weatherId.equals(that.weatherId) : that.weatherId != null) return false;
 		if (country != null ? !country.equals(that.country) : that.country != null) return false;
-		if (sunrise != null ? !sunrise.equals(that.sunrise) : that.sunrise != null) return false;
-		if (sunset != null ? !sunset.equals(that.sunset) : that.sunset != null) return false;
 		if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
-		if (update != null ? !update.equals(that.update) : that.update != null) return false;
 		return name != null ? name.equals(that.name) : that.name == null;
 	}
 
@@ -190,12 +193,12 @@ public class WeatherEntity implements Serializable {
 		result = 31 * result + (int) (temp ^ (temp >>> 32));
 		result = 31 * result + (message != null ? message.hashCode() : 0);
 		result = 31 * result + (shortMessage != null ? shortMessage.hashCode() : 0);
-		result = 31 * result + (weatherId != null ? weatherId.hashCode() : 0);
+		result = 31 * result + weatherId;
 		result = 31 * result + (country != null ? country.hashCode() : 0);
-		result = 31 * result + (sunrise != null ? sunrise.hashCode() : 0);
-		result = 31 * result + (sunset != null ? sunset.hashCode() : 0);
+		result = 31 * result + sunrise;
+		result = 31 * result + sunset;
 		result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
-		result = 31 * result + (update != null ? update.hashCode() : 0);
+		result = 31 * result + (update ? 1 : 0);
 		result = 31 * result + (name != null ? name.hashCode() : 0);
 		return result;
 	}

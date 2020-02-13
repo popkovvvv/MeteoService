@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,7 +35,7 @@ public class WeatherConfigService {
     public void loadWeather() {
         Iterable<WeatherEntity> configs = weatherRepo.findAll();
         for (WeatherEntity weatherEntity : configs) {
-            if (weatherEntity.getUpdate()) {
+            if (weatherEntity.isUpdate()) {
                 this.weatherEntityMap.put(weatherEntity.getName(), weatherEntity);
             }
         }
@@ -43,7 +44,7 @@ public class WeatherConfigService {
     public void update() {
         LOGGER.debug("Scheduled Event: Configuration table loaded/updated from database");
         for (WeatherEntity weatherEntity : weatherEntityMap.values()) {
-            if (weatherEntity.getUpdate()){
+            if (weatherEntity.isUpdate()){
                 weatherService.updateWeathers(weatherEntity);
             }
         }
