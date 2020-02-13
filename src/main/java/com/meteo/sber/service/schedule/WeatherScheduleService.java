@@ -19,9 +19,9 @@ public class WeatherScheduleService {
 
     private static final Logger LOGGER  = LoggerFactory.getLogger(WeatherScheduleService.class);
 
-    WeatherRepo weatherRepo;
+    private WeatherRepo weatherRepo;
 
-    WeatherService weatherService;
+    private WeatherService weatherService;
 
     private Map<String, WeatherEntity> weatherEntityMap;
 
