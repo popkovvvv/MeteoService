@@ -47,7 +47,7 @@ public class WeatherController {
 
     @PostMapping("/weather/time")
     public MessageRequest setTimeUp(@RequestParam String seconds){
-        int update = Integer.parseInt(seconds);
+        Integer update = Integer.parseInt(seconds);
         return weatherScheduler.changeTimeUp(update);
     }
 

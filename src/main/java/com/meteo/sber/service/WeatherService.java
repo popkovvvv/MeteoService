@@ -79,7 +79,6 @@ public class WeatherService {
             return new MessageRequest("OK", HttpStatus.OK.value());
         }
         return new MessageRequest("BAD_REQUEST", HttpStatus.BAD_REQUEST.value());
-
     }
 
     private WeatherEntity insertInData(WeatherEntity weatherEntity) {
