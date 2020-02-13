@@ -108,10 +108,6 @@ public class WeatherPojo {
         return this.weatherId;
     }
 
-    public void setWeatherId(Integer weatherId) {
-        this.weatherId = weatherId;
-    }
-
     public String getMessage() {
         return message;
     }
@@ -131,7 +127,6 @@ public class WeatherPojo {
     @JsonProperty("weather")
     public void setWeather(List<Map<String, Object>> weatherEntries) {
         Map<String, Object> weather = weatherEntries.get(0);
-        setWeatherId((Integer) weather.get("id"));
         setMessage((String) weather.get("description"));
         setShortMessage((String) weather.get("main"));
     }
