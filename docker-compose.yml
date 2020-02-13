@@ -2,21 +2,31 @@ version: '3'
 services:
   postgres:
     image: postgres
-    env_file:
-      - database.env # configure postgres
+    network_mode: bridge
     ports:
-      - 5432:5432
+      - 9090:9090
+    expose:
+      - 9090
+    environment:
+      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_USER=root
+      - POSTGRES_DB=meteo
+    container_name: postgres
 
   backend:
     restart: always
-    build: ./
+    build: ./backend
     working_dir: /backend
     volumes:
       - ./backend:/backend
       - ~/.m2:/root/.m2
+    expose:
+      - 8080
     ports:
       - 8080:8080
     command: mvn clean spring-boot:run
     depends_on:
+      - postgres
+    links:
       - postgres
     container_name: spring
