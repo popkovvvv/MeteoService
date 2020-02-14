@@ -21,7 +21,7 @@ public class WeatherScheduler implements SchedulingConfigurer {
 
     private AppConfig appConfig;
 
-    private volatile Integer timeToUp;
+    private Integer timeToUp;
 
     private static final Logger logger = LoggerFactory.getLogger(WeatherScheduler.class);
 
