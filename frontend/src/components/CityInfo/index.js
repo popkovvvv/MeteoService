@@ -8,73 +8,68 @@ import {
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faTint,
     faTemperatureHigh,
     faThermometerEmpty,
-    faCloud,
     faWind
 } from '@fortawesome/free-solid-svg-icons';
 
 export default ({
-    cityName,
-    zipCode,
+    id,
+    timestamp,
     temperature,
-    feelsLike,
-    tempMin,
-    tempMax,
-    pressure,
-    humidity,
-    infoStatus
+    windSpeed,
+    message,
+    shortMessage,
+    weatherId,
+    country,
+    sunset,
+    sunrise,
+    updatedAt,
+    update,
+    name
 }) => 
     <Card style={{ width: '40rem', margin: "40px 0 0 12%" }}>
         <Card.Body>
             <Card.Title>
-                {cityName}
+                {name + country}
                 <Badge style={{color: '#666', fontSize: '12px'}}>
-                    (Zip Code: <b>{zipCode}</b>)
+                    (ID: <b>{id}</b>)
                 </Badge>
             </Card.Title>
         </Card.Body>
         <ListGroup className="list-group-flush">
             <ListGroupItem>
                 <FontAwesomeIcon icon={faThermometerEmpty} style={{marginRight: 10}} />
-                {pressure}
+                {windSpeed}
             </ListGroupItem>
             <ListGroupItem>
                 <FontAwesomeIcon icon={faTemperatureHigh} style={{marginRight: 10}} />
                 {temperature} 
-                |
-                <small style={{color: 'red'}}>High: {tempMax}</small>
-                |
-                <small style={{color: 'blue'}}>Low: {tempMin}</small>
-                <div style={{float: 'right', color: '#666'}}>
-                    Feels like {feelsLike}
-                </div>
             </ListGroupItem>
             <ListGroupItem>
-                <FontAwesomeIcon icon={faTint} style={{marginRight: 10}} />
-                {humidity}
+                <p>{message}</p>
+                <p>{shortMessage}</p>
             </ListGroupItem>
         </ListGroup>
         <Alert variant="primary">
             <h3>
                 <FontAwesomeIcon icon={faWind} style={{marginRight: 10}} />
-                Wind
+                Meta information
             </h3>
             <Badge pill variant="primary">
-                Speed: {infoStatus.wind.speed}
+                Speed: {windSpeed}
             </Badge>  
             <Badge pill variant="primary">
-                Deg: {infoStatus.wind.speed}
-            </Badge>         
+                Sunset: {sunset}
+            </Badge>  
+            <Badge pill variant="primary">
+                Sunrise: {sunrise}
+            </Badge>        
         </Alert>
         <Alert variant="secondary">
             <h3>
-                <FontAwesomeIcon icon={faCloud} style={{marginRight: 10}} />
-                Clouds
-            </h3>
-            <Badge pill variant="secondary">
-                {infoStatus.clouds.all}
-            </Badge>        
+                <FontAwesomeIcon icon={update} style={{marginRight: 10}} />
+                Update: {update}
+            </h3>        
         </Alert>
     </Card>;

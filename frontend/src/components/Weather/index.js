@@ -5,7 +5,6 @@ import {
     Form,
     Col,
     Row,
-    FormControl
 } from 'react-bootstrap';
 
 import CityInfo from '../CityInfo';
@@ -14,7 +13,7 @@ class Weather extends Component {
     getDataFromBack = (cityName) => {
         if (cityName.length > 0) {
             //TODO нужно составить запрос согласно ответу сервера
-            fetch(`http://server/weather/${cityName}`, {
+            fetch(`http://backend:8080/weather/${cityName}`, {
                 method: 'GET',
                 data: {
                 }
@@ -42,23 +41,20 @@ class Weather extends Component {
                     </Row>
                 </Form>
                 <CityInfo  
-                   cityName="Moscow"
-                   zipCode="123456"
-                   temperature="80.3"
-                   tempMax="81."
-                   tempMin="76.2"
-                   feelsLike="70"
-                   pressure="12345"
-                   humidity="93"
-                   infoStatus={{
-                        "wind": {
-                            "speed": 0.47,
-                            "deg": 107.538
-                        },
-                        "clouds": {
-                            "all": 2
-                        }
-                   }} />
+                id="5"
+                timestamp="1234"
+                temperature = "243"
+                windSpeed = "10"
+                message = "Test message"
+                shortMessage = "message"
+                weatherId = "23"
+                country = "RU"
+                sunset = "9"
+                sunrise = "10"
+                updatedAt = "12.1"
+                update = "true"
+                name  = "Moscow"
+    />
             </Container>
             );
         }
