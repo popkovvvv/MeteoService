@@ -13,7 +13,7 @@ class Weather extends Component {
     getDataFromBack = (cityName) => {
         if (cityName.length > 0) {
             //TODO нужно составить запрос согласно ответу сервера
-            fetch(`http://backend:8080/weather/${cityName}`, {
+            fetch(`http://localhost:8080/weather/${cityName}`, {
                 method: 'GET',
                 data: {
                 }

@@ -44,7 +44,7 @@ services:
     image: grafana/grafana:5.2.2
     container_name: grafana
     ports:
-      - 3000:3000
+      - 4040:4040
     env_file:
       - ./grafana.env
 #

@@ -31,7 +31,7 @@ export default ({
     <Card style={{ width: '40rem', margin: "40px 0 0 12%" }}>
         <Card.Body>
             <Card.Title>
-                {name + country}
+                {name + country + shortMessage}
                 <Badge style={{color: '#666', fontSize: '12px'}}>
                     (ID: <b>{id}</b>)
                 </Badge>
@@ -47,8 +47,7 @@ export default ({
                 {temperature} 
             </ListGroupItem>
             <ListGroupItem>
-                <p>{message}</p>
-                <p>{shortMessage}</p>
+                Сообщение о погоде: {message}
             </ListGroupItem>
         </ListGroup>
         <Alert variant="primary">
