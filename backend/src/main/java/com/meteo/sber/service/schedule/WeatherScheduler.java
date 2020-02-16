@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import com.meteo.sber.config.AppConfig;
-import com.meteo.sber.model.request.MessageRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +48,9 @@ public class WeatherScheduler implements SchedulingConfigurer {
         });
     }
 
-    public MessageRequest changeTimeUp(Integer seconds) {
+    public com.meteo.sber.model.request.Message changeTimeUp( Integer seconds) {
         this.timeToUp = seconds;
-        return new MessageRequest("OK", HttpStatus.OK.value());
+        return new com.meteo.sber.model.request.Message("OK", HttpStatus.OK.value());
     }
 
 }

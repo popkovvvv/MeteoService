@@ -7,9 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.PostConstruct;
-import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,37 +32,27 @@ public class WeatherScheduleService {
 
     @PostConstruct
     public void loadWeather() {
-        Iterable<WeatherEntity> configs = weatherRepo.findAll();
-        for (WeatherEntity weatherEntity : configs) {
-            if (weatherEntity.isUpdate()) {
-                this.weatherEntityMap.put(weatherEntity.getName(), weatherEntity);
-            }
-        }
+        weatherRepo.findAll().stream().filter(WeatherEntity::isUpdate)
+                .forEach(weatherEntity -> weatherEntityMap.put(weatherEntity.getName(), weatherEntity));
     }
 
     public void update() {
         LOGGER.debug("Scheduled Event: Configuration table loaded/updated from database");
-        for (WeatherEntity weatherEntity : weatherEntityMap.values()) {
-            if (weatherEntity.isUpdate()){
-                weatherService.updateWeathers(weatherEntity);
-                weatherEntity.setUpdatedAt(new Date());
-                weatherRepo.save(weatherEntity);
-            }
-        }
+        weatherEntityMap.values().stream().filter(WeatherEntity::isUpdate).
+                forEach(weatherEntity -> weatherService.updateWeathers(weatherEntity));
     }
 
-    public void updateWeather(String name, boolean bool) {
-        Optional<WeatherEntity> weather =  weatherRepo.findByName(name);
-        if (weather.isPresent()){
+    public void updateWeather( String name, boolean bool) {
+        Optional<WeatherEntity> weather = weatherRepo.findByName(name);
+        if (weather.isPresent()) {
             WeatherEntity weatherEntity = weather.get();
-            if (bool){
-                weatherEntityMap.put(weatherEntity.getName(),weatherEntity);
+            if (bool) {
+                weatherEntityMap.put(weatherEntity.getName(), weatherEntity);
             } else {
                 weatherEntityMap.remove(weatherEntity.getName(), weatherEntity);
             }
             weatherEntity.setUpdate(bool);
             weatherRepo.save(weatherEntity);
-
         }
     }
 

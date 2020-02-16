@@ -1,7 +1,6 @@
 package com.meteo.sber.controller;
 
 import com.meteo.sber.model.entity.WeatherEntity;
-import com.meteo.sber.model.request.MessageRequest;
 import com.meteo.sber.service.schedule.WeatherScheduleService;
 import com.meteo.sber.service.schedule.WeatherScheduler;
 import com.meteo.sber.service.WeatherService;
@@ -39,21 +38,22 @@ public class WeatherController {
         return weatherService.getWeather(city);
     }
 
-    @ApiOperation(value = "Удаление города из системы по названию", response = MessageRequest.class)
+    @ApiOperation(value = "Удаление города из системы по названию")
     @DeleteMapping("/weather/{city}")
-    public MessageRequest deleteWeather( @PathVariable String city){
-        return weatherService.deleteWeather(city);
+    public void deleteWeather( @PathVariable String city){
+        weatherService.delete(city);
     }
 
-    @ApiOperation(value = "Обновление города по названию")
+    @ApiOperation(value = "Поставить город на обновление")
     @PutMapping("/weather/update")
     public void setUpdate(@RequestParam String city, @RequestParam Boolean bool){
         weatherScheduleService.updateWeather(city, bool);
     }
 
-    @ApiOperation(value = "Выставление таймеру интервал в секундах", response = MessageRequest.class)
+
+    @ApiOperation(value = "Выставление таймеру интервал в секундах", response = com.meteo.sber.model.request.Message.class)
     @PutMapping("/weather/time")
-    public MessageRequest setTimeUp(@RequestParam Integer seconds){
+    public com.meteo.sber.model.request.Message setTimeUp( @RequestParam Integer seconds){
         return weatherScheduler.changeTimeUp(seconds);
     }
 
