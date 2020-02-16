@@ -10,14 +10,19 @@ import {
 import CityInfo from '../CityInfo';
 
 class Weather extends Component {
+    
     getDataFromBack = (cityName) => {
+        
         if (cityName.length > 0) {
             //TODO нужно составить запрос согласно ответу сервера
-            fetch(`http://localhost:8080/weather/${cityName}`, {
+            fetch(`http://localhost:8080/api/v1/weather/${cityName}`, {
                 method: 'GET',
-                data: {
+                credentials: 'same-origin',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
                 }
-            })
+                })
             .then(response => response.json())
             .then(data => console.log(data))
             .catch(err => console.error(err));

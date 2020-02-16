@@ -8,7 +8,7 @@ RUN npm ci -qy
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 8181
 
 CMD ["npm", "install"]
 CMD ["npm", "start"]
