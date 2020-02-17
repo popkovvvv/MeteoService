@@ -39,10 +39,6 @@ export default ({
         </Card.Body>
         <ListGroup className="list-group-flush">
             <ListGroupItem>
-                <FontAwesomeIcon icon={faThermometerEmpty} style={{marginRight: 10}} />
-                {windSpeed}
-            </ListGroupItem>
-            <ListGroupItem>
                 <FontAwesomeIcon icon={faTemperatureHigh} style={{marginRight: 10}} />
                 {temperature} 
             </ListGroupItem>
@@ -52,7 +48,6 @@ export default ({
         </ListGroup>
         <Alert variant="primary">
             <h3>
-                <FontAwesomeIcon icon={faWind} style={{marginRight: 10}} />
                 Meta information
             </h3>
             <Badge pill variant="primary">

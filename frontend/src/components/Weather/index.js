@@ -10,9 +10,18 @@ import {
 import CityInfo from '../CityInfo';
 
 class Weather extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            data: [],
+            isLoad: false,
+        };
+    }
     
     getDataFromBack = (cityName) => {
-        
+        this.setState({isLoad: true});
         if (cityName.length > 0) {
             //TODO нужно составить запрос согласно ответу сервера
             fetch(`http://localhost:8080/api/v1/weather/${cityName}`, {
@@ -24,12 +33,13 @@ class Weather extends Component {
                 }
                 })
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(res => this.setState({data: res, isLoad: false}))
             .catch(err => console.error(err));
         }
     }
 
     render() {
+        const { data, isLoad } = this.state;
         return (
             <Container>
                 <Form>
@@ -45,21 +55,22 @@ class Weather extends Component {
                         </Col>
                     </Row>
                 </Form>
+            
                 <CityInfo  
-                id="5"
-                timestamp="1234"
-                temperature = "243"
-                windSpeed = "10"
-                message = "Test message"
-                shortMessage = "message"
-                weatherId = "23"
-                country = "RU"
-                sunset = "9"
-                sunrise = "10"
-                updatedAt = "12.1"
-                update = "true"
-                name  = "Moscow"
-    />
+                id={data.id}
+                timestamp={data.timestamp}
+                temperature = {data.temperature}
+                windSpeed = {data.windSpeed}
+                message = {data.message}
+                shortMessage = {data.shortMessage}
+                weatherId = {data.weatherId}
+                country = {data.country}
+                sunset = {data.sunset}
+                sunrise = {data.sunrise}
+                updatedAt = {data.updatedAt}
+                update = {data.update}
+                name  = {data.name}
+            />
             </Container>
             );
         }
