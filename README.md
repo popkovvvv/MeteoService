@@ -8,6 +8,9 @@
 # Monitoring
  - Grafana: http://localhost:3000
  - Prometheus: http://localhost:9090
+ 
+# React App
+ - http://localhost:8181
 
   
   
