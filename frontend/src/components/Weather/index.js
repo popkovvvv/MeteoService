@@ -21,7 +21,6 @@ class Weather extends Component {
     }
     
     getDataFromBack = (cityName) => {
-        this.setState({isLoad: true});
         if (cityName.length > 0) {
             //TODO нужно составить запрос согласно ответу сервера
             fetch(`http://localhost:8080/api/v1/weather/${cityName}`, {
@@ -33,7 +32,7 @@ class Weather extends Component {
                 }
                 })
             .then(response => response.json())
-            .then(res => this.setState({data: res, isLoad: false}))
+            .then(res => this.setState({data: res, isLoad: true}))
             .catch(err => console.error(err));
         }
     }
@@ -55,7 +54,7 @@ class Weather extends Component {
                         </Col>
                     </Row>
                 </Form>
-            
+                {!isLoad ? <h1>Введите город</h1> :
                 <CityInfo  
                 id={data.id}
                 timestamp={data.timestamp}
@@ -70,7 +69,7 @@ class Weather extends Component {
                 updatedAt = {data.updatedAt}
                 update = {data.update}
                 name  = {data.name}
-            />
+                />}
             </Container>
             );
         }
